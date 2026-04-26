@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>이 완 ♥ 성희주</title>
+<title>이완 ♥ 성희주</title>
 <style>
 @font-face{font-family:'Mapo';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');font-weight:normal;font-display:swap}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -423,7 +423,7 @@ footer{padding:2.4rem;text-align:center;background:var(--house)}
 <!-- 8. SNAP — 새 디자인: 스텝 가이드 -->
 <section class="snap-sec">
   <p class="snap-eyebrow">CAPTURE OUR MOMENTS</p>
-  <p class="snap-title">스 냅</p>
+  <p class="snap-title">사진 전달하기</p>
   <p class="snap-sub">예식 당일, 여러분이 담은 소중한 순간을<br>신랑신부에게 직접 전달해 주세요.</p>
 
   <div class="snap-steps">
@@ -449,7 +449,7 @@ footer{padding:2.4rem;text-align:center;background:var(--house)}
       <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="4" y="12" width="44" height="32" rx="6" fill="#EAE0D5"/><circle cx="18" cy="26" r="6" fill="#D5C9BC"/><path d="M4 36L18 27L26 32L34 24L48 37" stroke="#C8BEB4" stroke-width="2" stroke-linecap="round"/><path d="M34 4V16M30 9L34 4L38 9" stroke="#382D25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
     <p class="snap-cta-text">신랑신부의 행복한 순간을 담아주세요.<br>많은 참여 부탁드려요!</p>
-    <button class="snap-btn" onclick="document.getElementById('snapSheet').classList.add('open')">스냅 업로드</button>
+    <button class="snap-btn" onclick="document.getElementById('snapSheet').classList.add('open')">사진 전달하기</button>
     <p class="snap-cta-date">2026-09-05 12:00부터 업로드 가능합니다.</p>
   </div>
 </section>
@@ -469,7 +469,7 @@ footer{padding:2.4rem;text-align:center;background:var(--house)}
 <div class="fixed-cta">
   <button class="cta-main" onclick="document.getElementById('snapSheet').classList.add('open')">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="10" rx="2" stroke="white" stroke-width="1.2"/><circle cx="5.5" cy="8.5" r="1.5" stroke="white" stroke-width="1"/><path d="M1 11L5 8.5L7.5 10L10 8L15 12" stroke="white" stroke-width="1" stroke-linecap="round"/><path d="M10 1V5M8 3L10 1L12 3" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    스냅 업로드
+    사진 전달하기
   </button>
   <button class="cta-sub" onclick="window.scrollTo({top:document.querySelector('.gallery-sec').offsetTop,behavior:'smooth'})">
     <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x=".5" y="1.5" width="12" height="10" rx="2" stroke="#382D25" stroke-width="1.1"/><path d="M.5 9L4 6.5L6 8L8.5 6L12.5 9.5" stroke="#382D25" stroke-width="1" stroke-linecap="round"/></svg>
@@ -479,6 +479,34 @@ footer{padding:2.4rem;text-align:center;background:var(--house)}
     <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M11 1.5H2C1.45 1.5 1 1.95 1 2.5V8C1 8.55 1.45 9 2 9H4L6.5 11.5L9 9H11C11.55 9 12 8.55 12 8V2.5C12 1.95 11.55 1.5 11 1.5Z" stroke="#382D25" stroke-width="1.1"/></svg>
     방명록
   </button>
+</div>
+
+<!-- SNAP SHEET -->
+<div class="overlay" id="snapSheet" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h2 class="sheet-ttl">사진 전달하기</h2>
+    <p class="sheet-sub">여러분의 시선으로 담은 순간을<br>신랑신부에게 전달해주세요.</p>
+    <div class="field"><label>성 함</label><input type="text" placeholder="이름을 입력해주세요"></div>
+    <div class="uz">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="10" width="28" height="20" rx="4" stroke="#382D25" stroke-width="1.4"/><circle cx="12" cy="18" r="3" stroke="#382D25" stroke-width="1.2"/><path d="M4 26L12 20L17 24L22 19L32 28" stroke="#382D25" stroke-width="1.2" stroke-linecap="round"/><path d="M22 2L22 12M18 6L22 2L26 6" stroke="#382D25" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p>탭해서 사진 선택 · 여러 장 가능</p>
+    </div>
+    <div class="field"><label>축하 메시지 <span style="color:var(--ts);font-size:1.1rem">(선택)</span></label><textarea placeholder="신랑신부에게 따뜻한 한마디를…"></textarea></div>
+    <button class="btn-submit">전달하기</button>
+  </div>
+</div>
+
+<!-- GUESTBOOK SHEET -->
+<div class="overlay" id="guestSheet" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h2 class="sheet-ttl">방명록 작성하기</h2>
+    <p class="sheet-sub">신랑신부에게 축하의 말을 전해주세요.</p>
+    <div class="field"><label>성 함</label><input type="text" placeholder="이름을 입력해주세요"></div>
+    <div class="field"><label>메시지</label><textarea placeholder="축하의 말을 남겨주세요…"></textarea></div>
+    <button class="btn-submit">작성하기</button>
+  </div>
 </div>
 
 <!-- SNAP SHEET -->
