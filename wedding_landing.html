@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이완 ♥ 성희주</title>
+<style>
+@font-face{font-family:'Mapo';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff');font-weight:normal;font-display:swap}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#f2f0eb;--cer:#edebe9;--w:#fff;
+  --deep:#382D25;--mid:#432F20;--house:#2A1F17;
+  --wc:#E7E0D9;--wcs:rgba(231,224,217,0.70);
+  --gold:#cba258;
+  --tb:rgba(0,0,0,0.82);--ts:rgba(0,0,0,0.42);--tss:rgba(0,0,0,0.25);
+}
+html{font-size:62.5%}
+body{
+  font-family:'Mapo',Georgia,serif;
+  background:var(--w);color:var(--tb);
+  max-width:480px;margin:0 auto;
+  overflow-x:hidden;
+  /* bottom padding for fixed CTA */
+  padding-bottom:8rem;
+}
+
+/* ── ENVELOPE ── */
+#env-screen{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:#f7f5f0;transition:opacity .5s}
+#env-screen.out{opacity:0;pointer-events:none}
+.env-wrap{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;max-width:380px;padding:0 2.4rem}
+.env-script{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:3.2rem;color:var(--deep);letter-spacing:.02em;text-align:center;margin-bottom:.4rem;animation:up .7s both}
+.env-married{font-family:'Mapo',serif;font-size:1.55rem;letter-spacing:.28em;color:var(--deep);text-align:center;margin-bottom:2.8rem;animation:up .7s .1s both}
+.env-names-line{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:1.9rem;color:var(--deep);letter-spacing:.04em;text-align:left;margin-bottom:1.6rem;animation:up .7s .15s both;align-self:flex-start}
+.env-svg-wrap{width:100%;cursor:pointer;animation:up .7s .2s both;filter:drop-shadow(0 12px 32px rgba(56,45,37,.18))}
+.env-flap{transform-origin:50% 0%}
+.env-svg-wrap.go .env-body{animation:eRise .7s .1s ease forwards}
+.env-svg-wrap.go .env-flap{animation:fOpen .5s ease forwards}
+.env-svg-wrap.go .env-card{animation:cRise .7s .35s ease forwards}
+@keyframes fOpen{to{transform:rotateX(-175deg)}}
+@keyframes cRise{0%{transform:translateY(0);opacity:0}30%{opacity:1}100%{transform:translateY(-68px);opacity:1}}
+@keyframes eRise{to{transform:translateY(18px)}}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.env-hint{font-family:'Mapo',serif;font-size:1.3rem;letter-spacing:.16em;color:var(--ts);margin-top:2.4rem;animation:up .7s .3s both,pulse 2s 1s infinite;text-align:center}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+/* ── MAIN ── */
+#main{opacity:0;transition:opacity .6s}
+#main.on{opacity:1}
+
+/* ── 1. ARCH HERO ── */
+.arch-hero{position:relative;background:var(--w);padding:2.8rem 2.8rem 0;min-height:100svh;display:flex;flex-direction:column}
+.corner-row{display:flex;justify-content:space-between;margin-bottom:1.6rem;z-index:2}
+.corner-name{font-family:'Mapo',serif;font-size:1.5rem;color:var(--deep);letter-spacing:.06em}
+.arch-block{position:relative;width:100%;flex:1;min-height:60svh;border-radius:999px 999px 0 0;overflow:hidden;cursor:pointer}
+.arch-block img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.arch-overlay{position:absolute;inset:0;background:rgba(26,18,12,.08)}
+input[type=file]{display:none}
+
+/* ── 2. INVITATION ── */
+.invite-sec{padding:5.6rem 3.2rem 4.8rem;background:var(--w);text-align:center}
+/* names row — horizontal with heart */
+.invite-names-row{display:flex;align-items:center;justify-content:center;gap:1.6rem;margin-bottom:.8rem}
+.invite-name{font-family:'Mapo',serif;font-size:2.8rem;color:var(--deep);line-height:1}
+.invite-heart svg{display:block}
+.invite-date-row{font-family:'Mapo',serif;font-size:1.3rem;letter-spacing:.12em;color:var(--ts);margin-bottom:2.8rem}
+.invite-divider{display:flex;align-items:center;justify-content:center;gap:1rem;margin-bottom:3.2rem}
+.invite-divider-line{width:4rem;height:1px;background:rgba(56,45,37,.15)}
+.invite-divider-dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--gold)}
+.sec-eye{font-family:'Mapo',serif;font-size:1.15rem;letter-spacing:.22em;color:var(--tss);margin-bottom:1.6rem}
+.invite-head{font-family:'Mapo',serif;font-size:2.2rem;color:var(--deep);margin-bottom:2.8rem;line-height:1.4}
+.invite-body{font-family:'Mapo',serif;font-size:1.55rem;color:var(--ts);line-height:2.1;margin-bottom:4rem}
+.invite-photo{width:100%;aspect-ratio:3/2;border-radius:1.6rem;overflow:hidden;margin-bottom:3.6rem}
+.invite-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.family-row{font-family:'Mapo',serif;font-size:1.5rem;color:var(--tb);line-height:2.4}
+.family-rel{color:var(--ts)}
+.family-name{font-size:1.6rem;color:var(--deep)}
+.contact-btn{display:inline-flex;align-items:center;gap:.8rem;margin-top:2.8rem;border:1px solid rgba(56,45,37,.18);border-radius:1.2rem;padding:1.2rem 2.4rem;font-family:'Mapo',serif;font-size:1.4rem;color:var(--deep);cursor:pointer;background:transparent;transition:all .2s}
+.contact-btn:hover{border-color:var(--mid)}
+
+/* ── 3. CALENDAR ── */
+.cal-sec{padding:6rem 3.2rem;background:var(--w);text-align:center}
+.cal-big-date{font-family:'Mapo',serif;font-size:3.2rem;color:var(--deep);margin-bottom:.8rem;letter-spacing:.04em}
+.cal-time{font-family:'Mapo',serif;font-size:1.8rem;color:var(--deep);margin-bottom:4rem}
+.divider{width:4rem;height:1px;background:rgba(56,45,37,.15);margin:0 auto 4rem}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.2rem;margin:0 auto 3.6rem;max-width:32rem}
+.cal-dow{font-family:'Mapo',serif;font-size:1.2rem;color:var(--ts);padding:.8rem 0}
+.cal-dow.sun{color:#c97a7a}
+.cal-day{font-family:'Mapo',serif;font-size:1.4rem;color:var(--tb);padding:.9rem 0;position:relative}
+.cal-day.sun{color:#c97a7a}
+.cal-day.empty{color:transparent;pointer-events:none}
+/* ── CALENDAR wedding day highlight ── */
+.cal-day.wedding{
+  position:relative;
+  color:#fff;
+  font-weight:600;
+  z-index:0;
+}
+.cal-day.wedding::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:3.2rem;height:3.2rem;
+  background:var(--deep);
+  border-radius:50%;
+  z-index:-1;
+}
+.cd-wrap{display:flex;justify-content:center;align-items:flex-end;gap:.6rem;margin-bottom:1.6rem}
+.cd-col{display:flex;flex-direction:column;align-items:center}
+.cd-num{font-family:'Mapo',serif;font-size:3.8rem;color:var(--deep);line-height:1;letter-spacing:-.02em}
+.cd-unit{font-family:'Mapo',serif;font-size:1.1rem;letter-spacing:.14em;color:var(--tss);margin-top:.4rem}
+.cd-sep{font-size:3.2rem;color:rgba(56,45,37,.18);padding-bottom:.6rem;line-height:1}
+.cd-text{font-family:'Mapo',serif;font-size:1.5rem;color:var(--ts);line-height:1.7}
+.cd-text strong{color:var(--deep)}
+
+/* ── 4. LOCATION ── */
+.loc-sec{padding:6rem 3.2rem 4rem;background:var(--w);text-align:center}
+.sec-title{font-family:'Mapo',serif;font-size:2.6rem;color:var(--deep);margin-bottom:3.2rem}
+.loc-hall{font-family:'Mapo',serif;font-size:2rem;color:var(--deep);margin-bottom:.6rem}
+.loc-addr{font-family:'Mapo',serif;font-size:1.45rem;color:var(--ts);margin-bottom:.5rem}
+.loc-tel{font-family:'Mapo',serif;font-size:1.45rem;color:var(--ts);margin-bottom:3.2rem}
+.map-box{width:100%;aspect-ratio:4/3;background:var(--cer);border-radius:1.2rem;overflow:hidden;position:relative;margin-bottom:1.6rem;display:flex;align-items:center;justify-content:center}
+.map-box svg{opacity:.22}
+.map-label{position:absolute;bottom:1.2rem;right:1.2rem;font-family:'Mapo',serif;font-size:1.1rem;color:var(--ts);background:rgba(255,255,255,.8);padding:.4rem .8rem;border-radius:.6rem}
+.map-btn{width:100%;border:1px solid rgba(56,45,37,.18);border-radius:1.2rem;padding:1.4rem;font-family:'Mapo',serif;font-size:1.5rem;color:var(--deep);background:transparent;cursor:pointer;margin-bottom:3.2rem;transition:all .2s}
+.map-btn:hover{border-color:var(--mid)}
+.nav-sub-title{font-family:'Mapo',serif;font-size:1.6rem;color:var(--deep);text-align:left;margin-bottom:.6rem}
+.nav-sub-body{font-family:'Mapo',serif;font-size:1.35rem;color:var(--ts);text-align:left;margin-bottom:1.6rem}
+.nav-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:3.2rem}
+.nav-btn{border:1px solid rgba(56,45,37,.16);border-radius:1.2rem;padding:1.2rem .6rem;font-family:'Mapo',serif;font-size:1.3rem;color:var(--deep);background:transparent;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.nav-btn:hover{border-color:var(--mid)}
+.transit-title{font-family:'Mapo',serif;font-size:1.5rem;color:var(--deep);text-align:left;margin-bottom:1.2rem}
+.transit-row{display:flex;align-items:flex-start;gap:1rem;margin-bottom:.8rem;text-align:left}
+.transit-dot{width:.9rem;height:.9rem;border-radius:50%;flex-shrink:0;margin-top:.5rem}
+.transit-txt{font-family:'Mapo',serif;font-size:1.35rem;color:var(--ts);line-height:1.6}
+
+/* ── 5. GALLERY ── */
+.gallery-sec{padding:6rem 0 0;background:var(--w)}
+.gallery-head{text-align:center;padding:0 3.2rem 3.2rem}
+.gallery-main{width:100%;aspect-ratio:3/4;background:var(--cer);overflow:hidden;position:relative;cursor:pointer}
+.gallery-main img{width:100%;height:100%;object-fit:cover;transition:opacity .3s}
+.g-nav{position:absolute;top:50%;transform:translateY(-50%);width:3.6rem;height:3.6rem;border-radius:50%;background:rgba(255,255,255,.72);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:1.8rem;color:var(--deep)}
+.g-nav.prev{left:1.2rem}
+.g-nav.next{right:1.2rem}
+.gallery-thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:2px;padding-bottom:6rem}
+.g-thumb{aspect-ratio:1;overflow:hidden;cursor:pointer;opacity:.65;transition:opacity .2s}
+.g-thumb.active,.g-thumb:hover{opacity:1}
+.g-thumb img{width:100%;height:100%;object-fit:cover}
+
+/* ── 6. GUESTBOOK ── */
+.guest-sec{padding:7.2rem 3.2rem 6rem;background:var(--cream);text-align:center}
+.guest-body{font-family:'Mapo',serif;font-size:1.5rem;color:var(--ts);line-height:2;margin-bottom:3.2rem}
+.ghost-btn{display:inline-block;border:1px solid rgba(56,45,37,.2);border-radius:1.4rem;padding:1.4rem 3.2rem;font-family:'Mapo',serif;font-size:1.5rem;color:var(--deep);background:transparent;cursor:pointer;transition:all .2s;width:100%;max-width:32rem}
+.ghost-btn:hover{border-color:var(--mid)}
+
+/* ── 7. ACCOUNT ── */
+.account-sec{padding:6rem 3.2rem;background:var(--w);text-align:center}
+.account-body{font-family:'Mapo',serif;font-size:1.5rem;color:var(--ts);line-height:1.9;margin-bottom:3.2rem}
+.acc-group{border:1px solid rgba(56,45,37,.12);border-radius:1.4rem;overflow:hidden;margin-bottom:1.2rem;text-align:left}
+.acc-header{display:flex;justify-content:space-between;align-items:center;padding:1.6rem 2rem;background:var(--cream);cursor:pointer;font-family:'Mapo',serif;font-size:1.5rem;color:var(--deep)}
+.acc-body{border-top:1px solid rgba(56,45,37,.08)}
+.acc-row{display:flex;justify-content:space-between;align-items:center;padding:1.6rem 2rem;border-bottom:1px solid rgba(56,45,37,.06)}
+.acc-row:last-child{border-bottom:none}
+.acc-name{font-family:'Mapo',serif;font-size:1.5rem;color:var(--deep);display:flex;align-items:center;gap:.8rem;margin-bottom:.3rem}
+.acc-bank{font-family:'Mapo',serif;font-size:1.35rem;color:var(--ts)}
+.kakao-badge{width:2.8rem;height:2.8rem;border-radius:50%;background:#FEE500;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+
+/* ── 8. SNAP — 새 디자인: 타임라인 카드 스타일 ── */
+.snap-sec{padding:6rem 3.2rem;background:var(--cream);text-align:center}
+.snap-eyebrow{font-family:'Mapo',serif;font-size:1.15rem;letter-spacing:.22em;color:var(--tss);margin-bottom:1.2rem}
+.snap-title{font-family:'Mapo',serif;font-size:2.6rem;color:var(--deep);margin-bottom:.8rem}
+.snap-sub{font-family:'Mapo',serif;font-size:1.45rem;color:var(--ts);line-height:1.9;margin-bottom:4rem}
+.snap-steps{display:flex;flex-direction:column;gap:0;margin-bottom:4rem;text-align:left}
+.snap-step{display:flex;gap:2rem;position:relative;padding-bottom:3.2rem}
+.snap-step:last-child{padding-bottom:0}
+.snap-step-left{display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0;width:4rem}
+.snap-step-num{width:4rem;height:4rem;border-radius:50%;background:var(--deep);color:#fff;font-family:'Mapo',serif;font-size:1.5rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.snap-step-line{width:1px;flex:1;background:rgba(56,45,37,.15);margin-top:.4rem}
+.snap-step:last-child .snap-step-line{display:none}
+.snap-step-body{padding-top:.8rem}
+.snap-step-title{font-family:'Mapo',serif;font-size:1.6rem;color:var(--deep);margin-bottom:.4rem}
+.snap-step-desc{font-family:'Mapo',serif;font-size:1.35rem;color:var(--ts);line-height:1.7}
+.snap-cta-wrap{background:var(--w);border-radius:2rem;padding:2.8rem 2.4rem;text-align:center}
+.snap-cta-icon{margin-bottom:1.6rem}
+.snap-cta-text{font-family:'Mapo',serif;font-size:1.5rem;color:var(--ts);line-height:1.8;margin-bottom:2.4rem}
+.snap-cta-date{font-family:'Mapo',serif;font-size:1.25rem;color:var(--tss);margin-top:1.6rem}
+.snap-btn{display:inline-block;background:var(--deep);color:#fff;border:none;border-radius:50px;padding:1.4rem 3.2rem;font-family:'Mapo',serif;font-size:1.5rem;cursor:pointer;transition:all .2s;width:100%}
+.snap-btn:active{transform:scale(.95)}
+.snap-btn:hover{background:var(--mid)}
+
+/* ── SHARE / FOOTER ── */
+.share-sec{padding:4rem 3.2rem;background:var(--w);text-align:center}
+.kakao-share-btn{display:inline-flex;align-items:center;gap:1rem;background:#FEE500;border:none;border-radius:1.4rem;padding:1.4rem 2.8rem;font-family:'Mapo',serif;font-size:1.5rem;color:#3C1E1E;cursor:pointer;transition:all .2s;width:100%;max-width:32rem;justify-content:center}
+.kakao-share-btn:active{transform:scale(.97)}
+footer{padding:2.4rem;text-align:center;background:var(--house)}
+.ft{font-family:'Mapo',serif;font-size:1.2rem;color:var(--wcs);letter-spacing:.08em}
+.ft span{color:var(--wc)}
+
+/* ── FIXED CTA (하단 고정) ── */
+.fixed-cta{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:480px;
+  z-index:100;
+  background:var(--w);
+  padding:1.2rem 2rem 1.6rem;
+  border-top:1px solid rgba(56,45,37,.08);
+  display:flex;gap:1rem;
+  box-shadow:0 -4px 16px rgba(0,0,0,.06);
+}
+.cta-main{flex:2;display:flex;align-items:center;justify-content:center;gap:.8rem;background:var(--house);color:#fff;border:none;border-radius:50px;padding:1.4rem;font-family:'Mapo',serif;font-size:1.5rem;cursor:pointer;transition:all .2s}
+.cta-main:active{transform:scale(.95)}
+.cta-main:hover{background:var(--mid)}
+.cta-sub{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;background:transparent;color:var(--deep);border:1px solid rgba(56,45,37,.22);border-radius:50px;padding:1.4rem;font-family:'Mapo',serif;font-size:1.35rem;cursor:pointer;transition:all .2s}
+.cta-sub:hover{border-color:var(--deep)}
+
+/* ── SHEETS ── */
+.overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(26,18,12,.5);align-items:flex-end;justify-content:center}
+.overlay.open{display:flex}
+.sheet{background:var(--cream);border-radius:2.4rem 2.4rem 0 0;width:100%;max-width:480px;padding:2.4rem 2.4rem 4rem;max-height:90svh;overflow-y:auto}
+.sheet-handle{width:4rem;height:.4rem;border-radius:2px;background:rgba(56,45,37,.16);margin:0 auto 2.4rem}
+.sheet-ttl{font-family:'Mapo',serif;font-size:2rem;color:var(--deep);margin-bottom:.6rem}
+.sheet-sub{font-family:'Mapo',serif;font-size:1.4rem;color:var(--ts);margin-bottom:2.8rem;line-height:1.7}
+.field{margin-bottom:1.6rem}
+.field label{display:block;font-family:'Mapo',serif;font-size:1.2rem;letter-spacing:.08em;color:var(--ts);margin-bottom:.6rem}
+.field input,.field textarea{width:100%;border:1px solid rgba(56,45,37,.18);border-radius:1.4rem;padding:1.2rem 1.6rem;font-family:'Mapo',serif;font-size:1.5rem;color:var(--tb);background:var(--w);outline:none;transition:border-color .2s}
+.field input{height:5rem}
+.field textarea{height:9rem;resize:none}
+.field input:focus,.field textarea:focus{border-color:var(--mid)}
+.uz{border:1.5px dashed rgba(56,45,37,.22);border-radius:1.8rem;padding:3.2rem 2rem;text-align:center;cursor:pointer;background:var(--w);margin-bottom:2rem}
+.uz p{font-family:'Mapo',serif;font-size:1.4rem;color:var(--ts);margin-top:.8rem}
+.btn-submit{width:100%;background:var(--mid);color:#fff;border:none;border-radius:50px;padding:1.5rem;font-family:'Mapo',serif;font-size:1.6rem;cursor:pointer;transition:all .2s}
+.btn-submit:active{transform:scale(.95)}
+.btn-submit:hover{background:var(--deep)}
+</style>
+</head>
+<body>
+
+<!-- ENVELOPE -->
+<div id="env-screen">
+  <div class="env-wrap">
+    <p class="env-script">We're getting married!</p>
+
+    <div class="env-svg-wrap" id="envWrap" onclick="openEnv()">
+      <svg viewBox="0 0 340 220" style="overflow:visible;width:100%">
+        <defs><clipPath id="bc"><rect x="0" y="0" width="340" height="220" rx="8"/></clipPath></defs>
+
+        <!-- envelope body: deep olive green -->
+        <g class="env-body">
+          <rect x="0" y="0" width="340" height="220" rx="8" fill="#5C6B3A" clip-path="url(#bc)"/>
+          <!-- bottom fold lines -->
+          <line x1="0" y1="220" x2="170" y2="138" stroke="rgba(0,0,0,.12)" stroke-width="1"/>
+          <line x1="340" y1="220" x2="170" y2="138" stroke="rgba(0,0,0,.12)" stroke-width="1"/>
+          <!-- left flap -->
+          <path d="M0 0 L0 220 L170 138 Z" fill="#4E5E31"/>
+          <!-- right flap -->
+          <path d="M340 0 L340 220 L170 138 Z" fill="#4A5A2E"/>
+          <!-- top flap lower portion (visible when closed) -->
+          <path d="M0 0 L170 90 L340 0 Z" fill="#536430"/>
+        </g>
+
+        <!-- card inside -->
+        <g class="env-card" clip-path="url(#bc)">
+          <rect x="30" y="10" width="280" height="160" rx="6" fill="#faf8f5"/>
+          <text x="170" y="72" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="14" fill="#382D25" letter-spacing="1">We're getting married!</text>
+          <text x="170" y="96" text-anchor="middle" font-family="Mapo,serif" font-size="9" fill="rgba(56,45,37,.5)" letter-spacing="3">이완 ♥ 성희주</text>
+          <text x="170" y="114" text-anchor="middle" font-family="Mapo,serif" font-size="8" fill="rgba(56,45,37,.35)" letter-spacing="2">2026 · 09 · 05</text>
+        </g>
+
+        <!-- flap (rotates open) -->
+        <g class="env-flap">
+          <path d="M0 2 L170 92 L340 2 Z" fill="#536430"/>
+          <!-- wax seal: deep burgundy/wine -->
+          <circle cx="170" cy="55" r="22" fill="#6B2737"/>
+          <circle cx="170" cy="55" r="19" fill="#7A2D3F" opacity=".85"/>
+          <!-- seal texture lines -->
+          <circle cx="170" cy="55" r="15" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+          <!-- W monogram -->
+          <text x="170" y="61" text-anchor="middle" font-family="Georgia,serif" font-style="italic" font-size="16" fill="rgba(255,255,255,.9)" letter-spacing="0">W</text>
+        </g>
+      </svg>
+    </div>
+
+    <p class="env-hint">CLICK TO OPEN</p>
+  </div>
+</div>
+
+<div id="main">
+
+<!-- 1. ARCH HERO -->
+<section class="arch-hero">
+  <div class="corner-row">
+    <span class="corner-name">이 완</span>
+    <span class="corner-name">성희주</span>
+  </div>
+  <div class="arch-block">
+    <img id="heroImg" src="https://static.wowan.me/assets/seungyeon/withee-main.png" alt="이완 & 성희주"/>
+    <div class="arch-overlay"></div>
+  </div>
+</section>
+
+<!-- 2. INVITATION -->
+<section class="invite-sec">
+  <!-- 이 완 ♥ 성희주 한 줄 -->
+  <div class="invite-names-row">
+    <span class="invite-name">이 완</span>
+    <span class="invite-heart">
+      <svg width="26" height="24" viewBox="0 0 26 24" fill="none">
+        <path d="M13 22C13 22 1 14.5 1 6.5C1 3.46 3.46 1 6.5 1C8.8 1 10.8 2.5 13 4.5C15.2 2.5 17.2 1 19.5 1C22.54 1 25 3.46 25 6.5C25 14.5 13 22 13 22Z" fill="#cba258"/>
+      </svg>
+    </span>
+    <span class="invite-name">성희주</span>
+  </div>
+  <p class="invite-date-row">2026 · 09 · 05</p>
+  <div class="invite-divider">
+    <div class="invite-divider-line"></div>
+    <div class="invite-divider-dot"></div>
+    <div class="invite-divider-line"></div>
+  </div>
+  <p class="sec-eye">INVITATION</p>
+  <h2 class="invite-head">소중한 분들을 초대합니다</h2>
+  <p class="invite-body">서로의 일상에 스며들어 자연스럽게<br>하나의 시간이 되었습니다.<br><br>이제는 그 시간을 이어<br>평생을 함께 걸어가려 합니다.<br><br>소중한 날, 함께해 주신다면<br>그 마음 오래 간직하며 살아가겠습니다.</p>
+  <div class="invite-photo">
+    <img src="https://static.wowan.me/assets/seungyeon/withee-7.png" alt="커플 사진"/>
+  </div>
+  <div>
+    <p class="family-row"><span class="family-rel">이 환 · 박소현의 아들 </span><span class="family-name">이 완</span></p>
+    <p class="family-row"><span class="family-rel">성현국 · 김다영의 딸 </span><span class="family-name">성희주</span></p>
+  </div>
+  <button class="contact-btn">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h10a1 1 0 011 1v7a1 1 0 01-1 1H5l-3 2V3a1 1 0 011-1z" stroke="#382D25" stroke-width="1.2"/></svg>
+    연락하기
+  </button>
+</section>
+
+<!-- 3. CALENDAR -->
+<section class="cal-sec">
+  <p class="sec-eye">DATE</p>
+  <p class="cal-big-date">2026.09.05</p>
+  <p class="cal-time">토요일 낮 12시 00분</p>
+  <div class="divider"></div>
+  <div class="cal-grid" id="calGrid"></div>
+  <div class="cd-wrap">
+    <div class="cd-col"><span class="cd-num" id="cdD">--</span><span class="cd-unit">DAYS</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-col"><span class="cd-num" id="cdH">--</span><span class="cd-unit">HOUR</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-col"><span class="cd-num" id="cdM">--</span><span class="cd-unit">MIN</span></div>
+    <span class="cd-sep">:</span>
+    <div class="cd-col"><span class="cd-num" id="cdS">--</span><span class="cd-unit">SEC</span></div>
+  </div>
+  <p class="cd-text">이 완, 성희주의 결혼식이 <strong id="cdDText">--</strong>일 남았습니다.</p>
+</section>
+
+<!-- 4. LOCATION -->
+<section class="loc-sec">
+  <p class="sec-eye">LOCATION</p>
+  <p class="sec-title">오시는 길</p>
+  <p class="loc-hall">위디 웨딩홀, 3층</p>
+  <p class="loc-addr">서울 강남구 선릉로 1004</p>
+  <p class="loc-tel">Tel. 02-000-0000</p>
+  <div class="map-box">
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><path d="M32 8C22.06 8 14 16.06 14 26C14 40 32 56 32 56S50 40 50 26C50 16.06 41.94 8 32 8Z" stroke="#382D25" stroke-width="2"/><circle cx="32" cy="26" r="6" stroke="#382D25" stroke-width="2"/></svg>
+    <span class="map-label">지도 연동 예정</span>
+  </div>
+  <button class="map-btn">약도 이미지 보기</button>
+  <p class="nav-sub-title">내비게이션</p>
+  <p class="nav-sub-body">원하시는 앱을 선택하시면 길안내가 시작됩니다.</p>
+  <div class="nav-btns">
+    <button class="nav-btn"><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6.5" fill="#03C75A"/><text x="7" y="11" text-anchor="middle" font-size="7" fill="white" font-weight="bold">N</text></svg>네이버지도</button>
+    <button class="nav-btn"><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6.5" fill="#0066CC"/><text x="7" y="11" text-anchor="middle" font-size="7" fill="white" font-weight="bold">T</text></svg>티맵</button>
+    <button class="nav-btn"><svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6.5" fill="#FAE100"/><text x="7" y="11" text-anchor="middle" font-size="7" fill="#3C1E1E" font-weight="bold">K</text></svg>카카오내비</button>
+  </div>
+  <p class="transit-title">지하철</p>
+  <div class="transit-row"><div class="transit-dot" style="background:#996CAC"></div><p class="transit-txt">9호선 선정릉역 3번 출구에서 도보 5분</p></div>
+  <div class="transit-row"><div class="transit-dot" style="background:#00A84D"></div><p class="transit-txt">수인·분당선 선릉역 8번 출구에서 도보 7분</p></div>
+</section>
+
+<!-- 5. GALLERY -->
+<section class="gallery-sec">
+  <div class="gallery-head">
+    <p class="sec-eye">GALLERY</p>
+    <p class="sec-title" style="margin-bottom:0">갤러리</p>
+  </div>
+  <div class="gallery-main">
+    <img id="gMainImg" src="https://static.wowan.me/assets/seungyeon/withee-1.png" alt="갤러리 메인"/>
+    <button class="g-nav prev" onclick="gMove(-1)">&#8249;</button>
+    <button class="g-nav next" onclick="gMove(1)">&#8250;</button>
+  </div>
+  <div class="gallery-thumbs" id="gThumbs"></div>
+</section>
+
+<!-- 6. GUESTBOOK -->
+<section class="guest-sec">
+  <p class="sec-eye">GUESTBOOK</p>
+  <p class="sec-title" style="margin-bottom:1.6rem">방명록</p>
+  <p class="guest-body">신랑, 신부의<br>결혼을 축하해주세요.</p>
+  <button class="ghost-btn" onclick="document.getElementById('guestSheet').classList.add('open')">방명록 작성하기</button>
+</section>
+
+<!-- 7. ACCOUNT -->
+<section class="account-sec">
+  <p class="sec-eye">ACCOUNT</p>
+  <p class="sec-title">마음 전하실 곳</p>
+  <p class="account-body">참석이 어려우신 분들을 위해<br>계좌번호를 기재하였습니다.<br>너그러운 마음으로 양해 부탁드립니다.</p>
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc('groomAcc',this)">신랑측<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="#382D25" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+    <div class="acc-body" id="groomAcc">
+      <div class="acc-row"><div><p class="acc-name">이 완</p><p class="acc-bank">신한은행 110-000-000000</p></div><div class="kakao-badge"><svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M7 0C3.13 0 0 2.46 0 5.5C0 7.35 1.1 8.98 2.8 9.97L2.19 12L4.9 10.26C5.57 10.41 6.27 10.5 7 10.5C10.87 10.5 14 8.04 14 5C14 1.96 10.87 0 7 0Z" fill="#3C1E1E"/></svg></div></div>
+      <div class="acc-row"><div><p class="acc-name">이 환 (신랑 부)</p><p class="acc-bank">우리은행 1002-000-000000</p></div><div class="kakao-badge"><svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M7 0C3.13 0 0 2.46 0 5.5C0 7.35 1.1 8.98 2.8 9.97L2.19 12L4.9 10.26C5.57 10.41 6.27 10.5 7 10.5C10.87 10.5 14 8.04 14 5C14 1.96 10.87 0 7 0Z" fill="#3C1E1E"/></svg></div></div>
+      <div class="acc-row"><div><p class="acc-name">박소현 (신랑 모)</p><p class="acc-bank">국민은행 000-0000-0000-00</p></div><div class="kakao-badge"><svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M7 0C3.13 0 0 2.46 0 5.5C0 7.35 1.1 8.98 2.8 9.97L2.19 12L4.9 10.26C5.57 10.41 6.27 10.5 7 10.5C10.87 10.5 14 8.04 14 5C14 1.96 10.87 0 7 0Z" fill="#3C1E1E"/></svg></div></div>
+    </div>
+  </div>
+  <div class="acc-group">
+    <div class="acc-header" onclick="toggleAcc('brideAcc',this)">신부측<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 10L8 6L12 10" stroke="#382D25" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+    <div class="acc-body" id="brideAcc" style="display:none">
+      <div class="acc-row"><div><p class="acc-name">성희주</p><p class="acc-bank">카카오뱅크 3333-000-000000</p></div><div class="kakao-badge"><svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M7 0C3.13 0 0 2.46 0 5.5C0 7.35 1.1 8.98 2.8 9.97L2.19 12L4.9 10.26C5.57 10.41 6.27 10.5 7 10.5C10.87 10.5 14 8.04 14 5C14 1.96 10.87 0 7 0Z" fill="#3C1E1E"/></svg></div></div>
+      <div class="acc-row"><div><p class="acc-name">성현국 (신부 부)</p><p class="acc-bank">하나은행 000-000-000000</p></div><div class="kakao-badge"><svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M7 0C3.13 0 0 2.46 0 5.5C0 7.35 1.1 8.98 2.8 9.97L2.19 12L4.9 10.26C5.57 10.41 6.27 10.5 7 10.5C10.87 10.5 14 8.04 14 5C14 1.96 10.87 0 7 0Z" fill="#3C1E1E"/></svg></div></div>
+      <div class="acc-row"><div><p class="acc-name">김다영 (신부 모)</p><p class="acc-bank">농협은행 000-0000-0000-00</p></div><div class="kakao-badge"><svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M7 0C3.13 0 0 2.46 0 5.5C0 7.35 1.1 8.98 2.8 9.97L2.19 12L4.9 10.26C5.57 10.41 6.27 10.5 7 10.5C10.87 10.5 14 8.04 14 5C14 1.96 10.87 0 7 0Z" fill="#3C1E1E"/></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. SNAP — 새 디자인: 스텝 가이드 -->
+<section class="snap-sec">
+  <p class="snap-eyebrow">CAPTURE OUR MOMENTS</p>
+  <p class="snap-title">스 냅</p>
+  <p class="snap-sub">예식 당일, 여러분이 담은 소중한 순간을<br>신랑신부에게 직접 전달해 주세요.</p>
+
+  <div class="snap-steps">
+    <div class="snap-step">
+      <div class="snap-step-left"><div class="snap-step-num">1</div><div class="snap-step-line"></div></div>
+      <div class="snap-step-body"><p class="snap-step-title">이름 입력</p><p class="snap-step-desc">누가 보낸 사진인지 신랑신부가 알 수 있도록 성함을 입력해주세요.</p></div>
+    </div>
+    <div class="snap-step">
+      <div class="snap-step-left"><div class="snap-step-num">2</div><div class="snap-step-line"></div></div>
+      <div class="snap-step-body"><p class="snap-step-title">사진 선택</p><p class="snap-step-desc">갤러리에서 원하는 사진을 선택해주세요. 여러 장을 한 번에 올릴 수 있어요.</p></div>
+    </div>
+    <div class="snap-step">
+      <div class="snap-step-left"><div class="snap-step-num">3</div><div class="snap-step-line"></div></div>
+      <div class="snap-step-body"><p class="snap-step-title">메시지 작성</p><p class="snap-step-desc">사진과 함께 따뜻한 한마디를 남겨주세요. (선택)</p></div>
+    </div>
+    <div class="snap-step">
+      <div class="snap-step-left"><div class="snap-step-num">4</div></div>
+      <div class="snap-step-body"><p class="snap-step-title">전달 완료</p><p class="snap-step-desc">신랑신부의 대시보드에 바로 전달됩니다.</p></div>
+    </div>
+  </div>
+  <div class="snap-cta-wrap">
+    <div class="snap-cta-icon">
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect x="4" y="12" width="44" height="32" rx="6" fill="#EAE0D5"/><circle cx="18" cy="26" r="6" fill="#D5C9BC"/><path d="M4 36L18 27L26 32L34 24L48 37" stroke="#C8BEB4" stroke-width="2" stroke-linecap="round"/><path d="M34 4V16M30 9L34 4L38 9" stroke="#382D25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <p class="snap-cta-text">신랑신부의 행복한 순간을 담아주세요.<br>많은 참여 부탁드려요!</p>
+    <button class="snap-btn" onclick="document.getElementById('snapSheet').classList.add('open')">스냅 업로드</button>
+    <p class="snap-cta-date">2026-09-05 12:00부터 업로드 가능합니다.</p>
+  </div>
+</section>
+
+<!-- SHARE -->
+<section class="share-sec">
+  <button class="kakao-share-btn">
+    <svg width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M10 0C4.48 0 0 3.58 0 8C0 10.76 1.74 13.2 4.38 14.72L3.44 18L7.24 15.64C8.12 15.86 9.04 16 10 16C15.52 16 20 12.42 20 8C20 3.58 15.52 0 10 0Z" fill="#3C1E1E"/></svg>
+    카카오톡으로 초대장 보내기
+  </button>
+</section>
+
+<footer><p class="ft">powered by <span>withee</span></p></footer>
+
+</div><!-- /main -->
+
+<div class="fixed-cta">
+  <button class="cta-main" onclick="document.getElementById('snapSheet').classList.add('open')">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="4" width="14" height="10" rx="2" stroke="white" stroke-width="1.2"/><circle cx="5.5" cy="8.5" r="1.5" stroke="white" stroke-width="1"/><path d="M1 11L5 8.5L7.5 10L10 8L15 12" stroke="white" stroke-width="1" stroke-linecap="round"/><path d="M10 1V5M8 3L10 1L12 3" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    스냅 업로드
+  </button>
+  <button class="cta-sub" onclick="window.scrollTo({top:document.querySelector('.gallery-sec').offsetTop,behavior:'smooth'})">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x=".5" y="1.5" width="12" height="10" rx="2" stroke="#382D25" stroke-width="1.1"/><path d="M.5 9L4 6.5L6 8L8.5 6L12.5 9.5" stroke="#382D25" stroke-width="1" stroke-linecap="round"/></svg>
+    갤러리
+  </button>
+  <button class="cta-sub" onclick="document.getElementById('guestSheet').classList.add('open')">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M11 1.5H2C1.45 1.5 1 1.95 1 2.5V8C1 8.55 1.45 9 2 9H4L6.5 11.5L9 9H11C11.55 9 12 8.55 12 8V2.5C12 1.95 11.55 1.5 11 1.5Z" stroke="#382D25" stroke-width="1.1"/></svg>
+    방명록
+  </button>
+</div>
+
+<!-- SNAP SHEET -->
+<div class="overlay" id="snapSheet" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h2 class="sheet-ttl">스냅 전달하기</h2>
+    <p class="sheet-sub">여러분의 시선으로 담은 순간을<br>신랑신부에게 전달해주세요.</p>
+    <div class="field"><label>성 함</label><input type="text" placeholder="이름을 입력해주세요"></div>
+    <div class="uz">
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="10" width="28" height="20" rx="4" stroke="#382D25" stroke-width="1.4"/><circle cx="12" cy="18" r="3" stroke="#382D25" stroke-width="1.2"/><path d="M4 26L12 20L17 24L22 19L32 28" stroke="#382D25" stroke-width="1.2" stroke-linecap="round"/><path d="M22 2L22 12M18 6L22 2L26 6" stroke="#382D25" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p>탭해서 사진 선택 · 여러 장 가능</p>
+    </div>
+    <div class="field"><label>축하 메시지 <span style="color:var(--ts);font-size:1.1rem">(선택)</span></label><textarea placeholder="신랑신부에게 따뜻한 한마디를…"></textarea></div>
+    <button class="btn-submit">업로드하기</button> SHEET -->
+<div class="overlay" id="guestSheet" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <h2 class="sheet-ttl">방명록 작성하기</h2>
+    <p class="sheet-sub">신랑신부에게 축하의 말을 전해주세요.</p>
+    <div class="field"><label>성 함</label><input type="text" placeholder="이름을 입력해주세요"></div>
+    <div class="field"><label>메시지</label><textarea placeholder="축하의 말을 남겨주세요…"></textarea></div>
+    <button class="btn-submit">작성하기</button>
+  </div>
+</div>
+
+<script>
+function openEnv(){
+  const w=document.getElementById('envWrap');
+  if(w.classList.contains('go'))return;
+  w.classList.add('go');
+  setTimeout(()=>{
+    document.getElementById('env-screen').classList.add('out');
+    document.getElementById('main').classList.add('on');
+    setTimeout(()=>document.getElementById('env-screen').style.display='none',500);
+  },900);
+}
+
+// calendar Sep 2026 (starts Saturday = col 6)
+(function(){
+  const g=document.getElementById('calGrid');
+  ['일','월','화','수','목','금','토'].forEach(d=>{
+    const el=document.createElement('div');
+    el.className='cal-dow'+(d==='일'?' sun':'');
+    el.textContent=d;g.appendChild(el);
+  });
+  // Sep 1 2026 = Tuesday (index 2)
+  for(let i=0;i<2;i++){const el=document.createElement('div');el.className='cal-day empty';el.textContent='0';g.appendChild(el);}
+  for(let d=1;d<=30;d++){
+    const el=document.createElement('div');
+    const dow=(2+d-1)%7;
+    el.className='cal-day'+(dow===0?' sun':'')+(d===5?' wedding':'');
+    el.textContent=d;g.appendChild(el);
+  }
+})();
+
+// countdown
+const wDate=new Date('2026-09-05T12:00:00');
+function tick(){
+  const diff=wDate-new Date();
+  if(diff<=0)return;
+  const d=Math.floor(diff/86400000);
+  document.getElementById('cdD').textContent=d;
+  document.getElementById('cdH').textContent=String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+  document.getElementById('cdM').textContent=String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+  document.getElementById('cdS').textContent=String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  document.getElementById('cdDText').textContent=d;
+}
+tick();setInterval(tick,1000);
+
+// gallery
+const gPhotos=[
+  'https://static.wowan.me/assets/seungyeon/withee-2.png',
+  'https://static.wowan.me/assets/seungyeon/withee-3.png',
+  'https://static.wowan.me/assets/seungyeon/withee-4.png',
+  'https://static.wowan.me/assets/seungyeon/withee-5.png',
+  'https://static.wowan.me/assets/seungyeon/withee-6.png',
+];
+let gIdx=0;
+function gSet(i){
+  gIdx=(i+gPhotos.length)%gPhotos.length;
+  document.getElementById('gMainImg').src=gPhotos[gIdx];
+  document.querySelectorAll('.g-thumb').forEach((t,j)=>t.classList.toggle('active',j===gIdx));
+}
+function gMove(d){gSet(gIdx+d)}
+(function(){
+  const thumbs=document.getElementById('gThumbs');
+  gPhotos.forEach((src,i)=>{
+    const d=document.createElement('div');d.className='g-thumb'+(i===0?' active':'');
+    const img=document.createElement('img');img.src=src.replace('w=800','w=200');img.alt='';
+    d.appendChild(img);d.onclick=()=>gSet(i);thumbs.appendChild(d);
+  });
+})();
+
+// account accordion
+function toggleAcc(id,btn){
+  const el=document.getElementById(id);
+  const open=el.style.display!=='none';
+  el.style.display=open?'none':'block';
+  btn.querySelector('path').setAttribute('d',open?'M4 6L8 10L12 6':'M4 10L8 6L12 10');
+}
+</script>
+</body>
+</html>
